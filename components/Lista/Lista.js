@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, FlatList, Text, TouchableOpacity, ScrollView } from 'react-native'
 
 export function Lista({ childToParent }) {
 
@@ -41,7 +41,7 @@ export function Lista({ childToParent }) {
     }
 
     return (
-        <View style={styles.container}>
+        <View >
             <FlatList
                 showsHorizontalScrollIndicator={false}
                 horizontal

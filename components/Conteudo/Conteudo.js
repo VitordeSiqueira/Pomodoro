@@ -6,7 +6,7 @@ import { Botao } from '../Botao/Botao'
 
 export function Conteudo() {
 
-    const [minuto, setMinuto] = useState(5)
+    const [minuto, setMinuto] = useState(10)
   
     const childToParent = (childdata) => {
         setMinuto(childdata)
