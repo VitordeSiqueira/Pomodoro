@@ -1,17 +1,25 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { Tempo } from '../Tempo/Tempo'
 import { Lista } from '../Lista/Lista'
+import { Botao } from '../Botao/Botao'
 
 export function Conteudo() {
+
+    const [minuto, setMinuto] = useState(5)
+  
+    const childToParent = (childdata) => {
+        setMinuto(childdata)
+        console.log(minuto)
+    }
+
     return (
-        <View style={styles.container}>
-            <Tempo tempo={20} />
-            <Text style={styles.ponto}>:</Text>
-            <Tempo tempo={0}/>
+        <View >
+            <Tempo minuto={minuto}/>
+            <Lista childToParent={childToParent}/>
+            <Botao />
         </View>
 
-        
     )
 }
 

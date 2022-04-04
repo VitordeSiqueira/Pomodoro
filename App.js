@@ -10,8 +10,6 @@ export default function App() {
     <View>
       <Cabecalho />
       <Conteudo />
-      <Lista />
-      <Botao />
     </View>
   );
 }

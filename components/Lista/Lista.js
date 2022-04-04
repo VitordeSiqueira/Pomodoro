@@ -1,59 +1,72 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
 
-export function Lista() {
+export function Lista({ childToParent }) {
+
+    const [minSelecionado, setMinSelecionado] = useState(null);
     const tempo = [
-        {minutos: 5},
-        {minutos: 10},
-        {minutos: 20},
-        {minutos: 25},
-        {minutos: 30},
-        {minutos: 35},
-        {minutos: 40},
-        {minutos: 45},
-        {minutos: 50},
-        {minutos: 55},
-        {minutos: 60},
+        { minutos: 5 },
+        { minutos: 10 },
+        { minutos: 20 },
+        { minutos: 25 },
+        { minutos: 30 },
+        { minutos: 35 },
+        { minutos: 40 },
+        { minutos: 45 },
+        { minutos: 50 },
+        { minutos: 55 },
+        { minutos: 60 },
     ]
 
-function press(min) {
-    return min
-}
-function Min({ minutos }) {
-    function a() {
-        console.log(minutos);
-    }
-    return (
-        <View >
-            <TouchableOpacity style={styles.caixa} onPress={a}>
-                {minutos}</TouchableOpacity>
-        </View>
+    const ItemMin = ({ item, onPress, backgroundColor, textColor }) => (
+        <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
+            <Text style={[styles.caracter, textColor]}>{item.minutos}</Text>
+        </TouchableOpacity>
     )
-}
+    const renderItemMin = ({ item }) => {
+        const backgroundColor = item.minutos === minSelecionado ? "#6e3b6e" : "#f9c2ff";
+        const color = item.minutos === minSelecionado ? 'white' : 'black';
+
+        return (
+            <ItemMin
+                item={item}
+                onPress={() => {
+                    setMinSelecionado(item.minutos)
+                    childToParent(minSelecionado)
+                }}
+                backgroundColor={{ backgroundColor }}
+                textColor={{ color }}
+            />
+        );
+    }
+
     return (
         <View style={styles.container}>
-            <FlatList 
+            <FlatList
                 showsHorizontalScrollIndicator={false}
                 horizontal
                 data={tempo}
-                renderItem={({ item }) => <Min  minutos={item.minutos}/>}
+                renderItem={renderItemMin}
+                keyExtractor={(item) => item.minutos}
+                extraData={minSelecionado}
             />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    caracter: {
+        fontSize: 32,
+    },
     container: {
-        justifyContent:'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 8
     },
-    caixa: {
-        color: 'blue',
-        backgroundColor: '#fff',
-        borderWidth: 1,
-        marginTop: 16,
-        marginHorizontal: 15,
-        paddingHorizontal: 15,
-        paddingVertical: 4
-    },
+    item: {
+        borderRadius: 10,
+        borderWidth: 3,
+        padding: 20,
+        marginHorizontal: 16
+    }
 })

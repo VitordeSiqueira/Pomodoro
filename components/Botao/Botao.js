@@ -9,7 +9,7 @@ export function Botao() {
             style={styles.button}
             >
                 <Feather
-                name="pause"
+                name="play"
                 size={24}
                 color='white'
                 />
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         width: 100,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#000',
+        backgroundColor: '#65727B',
         borderRadius: 50
       },
 

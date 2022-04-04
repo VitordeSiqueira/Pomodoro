@@ -11,12 +11,12 @@ export function Cabecalho() {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#2d2b90',
+        backgroundColor: '#b5d1ff',
         textAlign: 'center',
         paddingVertical: '15px'
     },
     titulo: {
-        fontSize: 16,
-        color: '#fff'
+        fontSize: 40,
+        color: '#000'
     }
 })
