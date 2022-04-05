@@ -1,20 +1,36 @@
-import React from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import { Text, View, StyleSheet, TouchableOpacity, Button } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 
-export function Botao() {
+export function Botao({ statusCronometro }) {
+
+    const [iniciado, setIniciado] = useState(false)
+    
+    function mudarStatus() {
+        if(iniciado == false) {
+            setIniciado(true)
+            statusCronometro(true)
+        } else {
+            setIniciado(false)
+            statusCronometro(false)
+        }
+
+
+    }
+
     return (
         <View style={styles.container}>
             <TouchableOpacity
-            style={styles.button}
+                onPress={mudarStatus}
+                style={styles.button}
             >
                 <Feather
-                name="play"
-                size={24}
-                color='white'
-                />
+                name={iniciado ? 'pause' : 'play'}
+                size={60}
+                color='black'
+            />
             </TouchableOpacity>
-      </View>
+        </View>
     )
 }
 
@@ -26,13 +42,11 @@ const styles = StyleSheet.create({
     button: {
         alignItems: "center",
         backgroundColor: "#DDDDDD",
-        padding: 10,
         height: 100,
         width: 100,
         justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#65727B',
         borderRadius: 50
-      },
+    },
 
 })

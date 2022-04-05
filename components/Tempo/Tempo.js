@@ -3,8 +3,19 @@ import { Text, View, StyleSheet } from 'react-native'
 
 export function Tempo(props) {
     const [minuto, setMinuto] = useState(props.minuto);
-    const [segundo, setSegundo] = useState(0);
-    const [iniciado, setIniciado] = useState(false);
+    const [segundo, setSegundo] = useState();
+    const [iniciado, setIniciado] = useState(props.status);
+    
+    useEffect(() => {
+        setIniciado(props.status)
+        setSegundo(0)
+        console.log(props.status, 'status')
+    },[props.status]);
+
+    useEffect(() => {
+        setMinuto(props.minuto)
+        console.log(props.minuto, 'propsminuto')
+    },[props.minuto]);
 
     useEffect(() => {
         if (iniciado == true) {
@@ -28,6 +39,10 @@ export function Tempo(props) {
                     setSegundo(segundo - 1);
                 }
             }, 1000);
+        }
+        else{
+            setSegundo(0);
+            setMinuto(0);
         }
     }, [segundo]);
 

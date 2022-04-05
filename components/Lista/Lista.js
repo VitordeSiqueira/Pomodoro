@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, FlatList, Text, TouchableOpacity, ScrollView } from 'react-native'
 
 export function Lista({ childToParent }) {
 
-    const [minSelecionado, setMinSelecionado] = useState(null);
+    const [minSelecionado, setMinSelecionado] = useState(25);
     const tempo = [
         { minutos: 5 },
         { minutos: 10 },
@@ -27,12 +27,17 @@ export function Lista({ childToParent }) {
         const backgroundColor = item.minutos === minSelecionado ? "#6e3b6e" : "#f9c2ff";
         const color = item.minutos === minSelecionado ? 'white' : 'black';
 
+
+
         return (
             <ItemMin
                 item={item}
                 onPress={() => {
                     setMinSelecionado(item.minutos)
-                    childToParent(minSelecionado)
+                   console.log(item.minutos)
+                    childToParent(item.minutos)
+                    // console.log(minSelecionado, "OI")
+                    // console.log(item.minutos, "ausdh")
                 }}
                 backgroundColor={{ backgroundColor }}
                 textColor={{ color }}

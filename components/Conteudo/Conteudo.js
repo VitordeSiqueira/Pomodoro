@@ -1,23 +1,34 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { Tempo } from '../Tempo/Tempo'
 import { Lista } from '../Lista/Lista'
 import { Botao } from '../Botao/Botao'
 
 export function Conteudo() {
 
-    const [minuto, setMinuto] = useState(10)
+    const [minuto, setMinuto] = useState(null)
+    const [minutos, setMinutos] = useState(null)
+    const [status, setStatus] = useState(null)
+
+    useEffect(() => {
+        console.log(`O minuto é ${minuto}`)
+        setMinutos(minuto)
+    },[minuto]);
   
     const childToParent = (childdata) => {
         setMinuto(childdata)
-        console.log(minuto)
+    }
+
+    const statusCronometro = (status) => {
+        setStatus(status)
+        //console.log(status, "statuscronometro")
     }
 
     return (
         <View >
-            <Tempo minuto={minuto}/>
+            <Tempo minuto={minutos} status={status}/>
             <Lista childToParent={childToParent}/>
-            <Botao />
+            <Botao statusCronometro={statusCronometro}/>
         </View>
 
     )
