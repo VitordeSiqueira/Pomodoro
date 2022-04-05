@@ -2,37 +2,34 @@ import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 
 export function Tempo(props) {
-    const [minuto, setMinuto] = useState(props.minuto);
-    const [segundo, setSegundo] = useState();
+    const [minuto, setMinuto] = useState(0);
+    const [segundo, setSegundo] = useState(0);
     const [iniciado, setIniciado] = useState(props.status);
-    
+
+    //Quando a props.status é alterado, irá atualizar a variavel iniciado de acordo com o valor passado pelo Conteudo
     useEffect(() => {
         setIniciado(props.status)
-        setSegundo(0)
-        console.log(props.status, 'status')
-    },[props.status]);
+    }, [props.status]);
 
+    //Quando a props.minuto é alterado, irá atualizar a variavel minuto de acordo com o valor passado pelo Conteudo
     useEffect(() => {
         setMinuto(props.minuto)
-        console.log(props.minuto, 'propsminuto')
-    },[props.minuto]);
+    }, [props.minuto]);
 
+    //Realiza a contagem regressiva da variavel minuto e segundo de acordo com os valores passados (segundo sempre vai iniciar em 0)
     useEffect(() => {
         if (iniciado == true) {
+            //Utiliza a função setInterval do modulo Timers do NodeJs, que irá executar o codigo dentro dela após o tempo definido de 1000ms
             let intervalo = setInterval(() => {
                 clearInterval(intervalo);
-
                 if (segundo === 0) {
                     if (minuto !== 0) {
                         //Diminui 1 do min e define 59 seg
                         setSegundo(59);
                         setMinuto(minuto - 1);
                     } else {
-                        //Timer zerado
-                        //let minuto = 19
-                        //let segundo = 59;
-                        //setSegundo(segundo);
-                        //setMinuto(minuto);
+                        //Timer zerado vai retornar a props cronometroZeradoStatus = true para Conteudo
+                        props.cronometroZeradoStatus(true)
                     }
                 } else {
                     //Diminui 1 seg
@@ -40,12 +37,14 @@ export function Tempo(props) {
                 }
             }, 1000);
         }
-        else{
-            setSegundo(0);
-            setMinuto(0);
+        else {
+            //Caso a varivel iniciado seja false, ou seja, o timer esteja parado, vai definir os segundo e minutos de acordo com os valores que eram no momento em que foi pausado o timer
+            setSegundo(segundo);
+            setMinuto(minuto);
         }
-    }, [segundo]);
+    }, [segundo, iniciado]);
 
+    //Variveis para adicionar o 0 na frente dos minutos e segundos, quando os mesmo forem < 10
     const timerMinuto = minuto < 10 ? `0${minuto}` : minuto;
     const timerSegundo = segundo < 10 ? `0${segundo}` : segundo;
 
