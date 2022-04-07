@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { StyleSheet, Text, View, Platform, StatusBar} from 'react-native';
 
 export function Cabecalho() {
     return (
@@ -12,11 +12,11 @@ export function Cabecalho() {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#b5d1ff',
-        textAlign: 'center',
-        paddingVertical: '15px'
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     titulo: {
         fontSize: 40,
-        color: '#000'
+        color: '#000',
+        textAlign: 'center',
     }
 })
