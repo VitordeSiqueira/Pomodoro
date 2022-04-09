@@ -5,6 +5,7 @@ export function Tempo(props) {
     const [minuto, setMinuto] = useState(0);
     const [segundo, setSegundo] = useState(5);
     const [iniciado, setIniciado] = useState(props.status);
+    const [contador, setContador] = useState(0)
 
     const ONE_SECOND_IN_MS = 1000;
     //Quando a props.status é alterado, irá atualizar a variavel iniciado de acordo com o valor passado pelo Conteudo
@@ -14,23 +15,29 @@ export function Tempo(props) {
 
     //Quando a props.minuto é alterado, irá atualizar a variavel minuto de acordo com o valor passado pelo Conteudo
     useEffect(() => {
-        setMinuto(props.minuto)
+        if (contador == 0) {
+            setContador(contador + 1)
+        } else {
+            setMinuto(props.minuto)
+            setSegundo(0)
+            props.cronometroZeradoStatus(false)
+        }
     }, [props.minuto]);
 
     const createTwoButtonAlert = () =>
 
-    Alert.alert(
-      "Alert Title",
-      "My Alert Msg",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => Vibration.cancel()}
-      ]
-    );
+        Alert.alert(
+            "Alert Title",
+            "My Alert Msg",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { text: "OK", onPress: () => Vibration.cancel() }
+            ]
+        );
 
     //Realiza a contagem regressiva da variavel minuto e segundo de acordo com os valores passados (segundo sempre vai iniciar em 0)
     useEffect(() => {

@@ -5,10 +5,16 @@ import { Feather } from '@expo/vector-icons';
 export function Botao(props) {
 
     const [iniciado, setIniciado] = useState(false)
+    const [botaoDesabilitado, setBotaoDesabilitado] = useState(null)
 
     useEffect(() => {
         if (props.cronometroZerado == true) {
             setIniciado(false)
+            setBotaoDesabilitado(true)
+            props.statusCronometro(false)
+        } else if (props.cronometroZerado == false) {
+            setIniciado(false)
+            setBotaoDesabilitado(false)
         }
     }, [props.cronometroZerado]);
 
@@ -31,6 +37,7 @@ export function Botao(props) {
             <TouchableOpacity
                 onPress={mudarStatus}
                 style={styles.button}
+                disabled={botaoDesabilitado}
             >
                 <Feather
                     name={iniciado ? 'pause' : 'play'}
