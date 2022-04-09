@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Alert, Vibration } from 'react-native'
 
 export function Tempo(props) {
     const [minuto, setMinuto] = useState(0);
-    const [segundo, setSegundo] = useState(0);
+    const [segundo, setSegundo] = useState(5);
     const [iniciado, setIniciado] = useState(props.status);
 
+    const ONE_SECOND_IN_MS = 1000;
     //Quando a props.status é alterado, irá atualizar a variavel iniciado de acordo com o valor passado pelo Conteudo
     useEffect(() => {
         setIniciado(props.status)
@@ -15,6 +16,21 @@ export function Tempo(props) {
     useEffect(() => {
         setMinuto(props.minuto)
     }, [props.minuto]);
+
+    const createTwoButtonAlert = () =>
+
+    Alert.alert(
+      "Alert Title",
+      "My Alert Msg",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => Vibration.cancel()}
+      ]
+    );
 
     //Realiza a contagem regressiva da variavel minuto e segundo de acordo com os valores passados (segundo sempre vai iniciar em 0)
     useEffect(() => {
@@ -36,6 +52,11 @@ export function Tempo(props) {
                     setSegundo(segundo - 1);
                 }
             }, 1000);
+
+            // if(segundo == 0) {
+            //     createTwoButtonAlert()
+            //     Vibration.vibrate(2 * ONE_SECOND_IN_MS)
+            // }
         }
         else {
             //Caso a varivel iniciado seja false, ou seja, o timer esteja parado, vai definir os segundo e minutos de acordo com os valores que eram no momento em que foi pausado o timer

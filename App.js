@@ -5,6 +5,8 @@ import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { Cabecalho } from './components/Cabecalho/Cabecalho';
 import { Conteudo } from './components/Conteudo/Conteudo';
 
+import { Notification } from './components/Notification/Notification';
+
 export default function App() {
   return (
     <SafeAreaView>
@@ -12,6 +14,7 @@ export default function App() {
         <Cabecalho />
         <Conteudo />
     </SafeAreaView>
+    // <Notification />
   );
 }
 

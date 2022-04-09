@@ -5,7 +5,7 @@ export function Lista(props) {
 
     const [minSelecionado, setMinSelecionado] = useState(null);
     const tempo = [
-        { minutos: 5 },
+        { minutos: 1 },
         { minutos: 10 },
         { minutos: 20 },
         { minutos: 25 },
