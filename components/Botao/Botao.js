@@ -13,9 +13,11 @@ export function Botao(props) {
             setIniciado(false)
             setBotaoDesabilitado(true)
             props.statusCronometro(false)
+            props.listaDesativada(false)
         } else if (props.cronometroZerado == false) {
             setIniciado(false)
             setBotaoDesabilitado(false)
+            props.statusCronometro(false)
         }
     }, [props.cronometroZerado]);
 
@@ -25,11 +27,13 @@ export function Botao(props) {
         if (iniciado == false) {
             setIniciado(true)
             props.statusCronometro(true)
+            props.listaDesativada(true)
         } 
         //Caso iniciado seja true e foi chamada a função mudarStatus, irá definir iniciado = false e retornar para Conteudo o valor false, visto que o timer deve ser parado 
         else {
             setIniciado(false)
             props.statusCronometro(false)
+            props.listaDesativada(false)
         }
     }
 

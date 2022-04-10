@@ -19,7 +19,7 @@ export function Lista(props) {
     ]
 
     const ItemMin = ({ item, onPress, backgroundColor, textColor }) => (
-        <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
+        <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]} disabled={props.listaDesativada}>
             <Text style={[styles.caracter, textColor]}>{item.minutos}</Text>
         </TouchableOpacity>
     )

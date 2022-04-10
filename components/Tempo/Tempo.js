@@ -7,20 +7,17 @@ import * as Notifications from 'expo-notifications';
 //Config SDK Notification
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: true,
-      shouldSetBadge: false,
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: false,
     }),
-  });
-  
+});
 
 export function Tempo(props) {
     const [minuto, setMinuto] = useState(0);
     const [segundo, setSegundo] = useState(5);
-    const [iniciado, setIniciado] = useState(props.status);
-    const [contador, setContador] = useState(0)
+    const [iniciado, setIniciado] = useState(false);
 
-    const ONE_SECOND_IN_MS = 1000;
     //Quando a props.status é alterado, irá atualizar a variavel iniciado de acordo com o valor passado pelo Conteudo
     useEffect(() => {
         setIniciado(props.status)
@@ -28,20 +25,17 @@ export function Tempo(props) {
 
     //Quando a props.minuto é alterado, irá atualizar a variavel minuto de acordo com o valor passado pelo Conteudo
     useEffect(() => {
-        if (contador == 0) {
-            setContador(contador + 1)
-        } else {
-            setMinuto(props.minuto)
-            setSegundo(0)
-            props.cronometroZeradoStatus(false)
-        }
+        setIniciado(false)
+        setMinuto(props.minuto)
+        setSegundo(0)
+        props.cronometroZeradoStatus(false)
     }, [props.minuto]);
 
     //Função Alerta
     const createTwoButtonAlert = () =>
         Alert.alert(
-            "Tempo Esgotado",
-            "Não sei o que escrever",
+            "Tempo finalizado!",
+            "Hora de dar um descanso para a mente!!",
             [
                 { text: "OK", onPress: () => Vibration.cancel() }
             ]
@@ -61,20 +55,17 @@ export function Tempo(props) {
                     } else {
                         //Timer zerado vai retornar a props cronometroZeradoStatus = true para Conteudo
                         props.cronometroZeradoStatus(true)
+                        //Chamando a função do SDK Notification
+                        schedulePushNotification();
+                        //Chamando a função Alerta
+                        createTwoButtonAlert()
+                        // Vibration.vibrate(1 * ONE_SECOND_IN_MS)
                     }
                 } else {
                     //Diminui 1 seg
                     setSegundo(segundo - 1);
                 }
             }, 1000);
-
-            if(segundo == 0) {
-                //Chamando a função do SDK Notification
-                schedulePushNotification();
-                //Chamando a função Alerta
-                createTwoButtonAlert()
-                // Vibration.vibrate(1 * ONE_SECOND_IN_MS)
-            }
         }
         else {
             //Caso a varivel iniciado seja false, ou seja, o timer esteja parado, vai definir os segundo e minutos de acordo com os valores que eram no momento em que foi pausado o timer
@@ -103,14 +94,14 @@ export function Tempo(props) {
 //Função SDK Notification
 async function schedulePushNotification() {
     await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Tempo Finalizado ⏰",
-        body: 'Não sei o que escrever2',
-        data: { data: 'goes here' },
-      },
-      trigger: null,
+        content: {
+            title: "Tempo Finalizado ⏰",
+            body: 'Hora de dar um descanso para a mente!!',
+            data: { data: 'goes here' },
+        },
+        trigger: null,
     });
-  }
+}
 
 const styles = StyleSheet.create({
     bloco: {
@@ -127,7 +118,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.58,
         shadowRadius: 16.00,
-        
+
         elevation: 24,
     },
     caracter: {

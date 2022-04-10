@@ -8,11 +8,11 @@ export function Conteudo() {
 
     const [minutoEscolhido, setMinutoEscolhido] = useState(null)
     const [minuto, setMinuto] = useState(null)
-    const [statusAntes, setStatusAntes] = useState(null)
+    const [statusAntes, setStatusAntes] = useState(false)
     const [statusDepois, setStatusDepois] = useState(null)
     const [cronometroZeradoAntes, setCronometroZeradoAntes] = useState(null)
     const [cronometroZeradoDepois, setCronometroZeradoDepois] = useState(null)
-    const [contador, setContador] = useState(0);
+    const [listaStatusDesativada, setListaDesativada] = useState(false)
 
     useEffect(() => {
         setMinuto(minutoEscolhido)
@@ -23,14 +23,11 @@ export function Conteudo() {
     }, [statusAntes]);
 
     useEffect(() => {
-        if (contador == 0) {
-            setContador(contador + 1)
+        if (cronometroZeradoAntes == true) {
+            setCronometroZeradoDepois(true)
         } else {
-            if (cronometroZeradoAntes == true) {
-                setCronometroZeradoDepois(true)
-            } else {
-                setCronometroZeradoDepois(false)
-            }
+            setCronometroZeradoDepois(false)
+
         }
     }, [cronometroZeradoAntes]);
 
@@ -46,11 +43,15 @@ export function Conteudo() {
         setCronometroZeradoAntes(cronometroZeradoStatus)
     }
 
+    const listaAtivaStatus = (status) => {
+        setListaDesativada(status)
+    }
+
     return (
         <View >
             <Tempo minuto={minuto} status={statusDepois} cronometroZeradoStatus={cronometroZeradoStatus} />
-            <Lista minutoEscolhidoLista={minutoEscolhidoLista} />
-            <Botao statusCronometro={statusCronometro} cronometroZerado={cronometroZeradoDepois} />
+            <Lista minutoEscolhidoLista={minutoEscolhidoLista} listaDesativada={listaStatusDesativada} />
+            <Botao statusCronometro={statusCronometro} cronometroZerado={cronometroZeradoDepois} listaDesativada={listaAtivaStatus} />
         </View>
 
     )
