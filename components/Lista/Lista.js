@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, FlatList, Text, TouchableOpacity, ScrollView } from 'react-native'
+import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
 
 export function Lista(props) {
 
@@ -24,8 +24,8 @@ export function Lista(props) {
         </TouchableOpacity>
     )
     const renderItemMin = ({ item }) => {
-        const backgroundColor = item.minutos === minSelecionado ? "#6e3b6e" : "#f9c2ff";
-        const color = item.minutos === minSelecionado ? 'white' : 'black';
+        const backgroundColor = item.minutos === minSelecionado ? "#ed8277" : "#fff";
+        const color = item.minutos === minSelecionado ? '#fff' : '#e74d3d';
 
         return (
             <ItemMin
@@ -41,7 +41,7 @@ export function Lista(props) {
     }
 
     return (
-        <View >
+        <View style={styles.container}>
             <FlatList
                 showsHorizontalScrollIndicator={false}
                 horizontal
@@ -61,12 +61,11 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 8
+        marginVertical: 100,
     },
     item: {
         borderRadius: 10,
-        borderWidth: 3,
         padding: 20,
-        marginHorizontal: 16
+        marginHorizontal: 16,
     }
 })

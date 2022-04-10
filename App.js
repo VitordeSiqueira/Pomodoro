@@ -1,22 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
+import { Dimensions } from 'react-native';
+import 'react-native-reanimated'
 
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView, StatusBar } from 'react-native';
 
 import { Cabecalho } from './components/Cabecalho/Cabecalho';
 import { Conteudo } from './components/Conteudo/Conteudo';
 
-import { Notification } from './components/Notification/Notification';
 
 export default function App() {
   return (
-    <SafeAreaView>
-      <StatusBar backgroundColor="white" barStyle="light-content"/> 
-        <Cabecalho />
+    <SafeAreaView style={styles.container}>
+       <StatusBar backgroundColor="#e74d3d" barStyle='light-content'/>   
+         <Cabecalho />
         <Conteudo />
     </SafeAreaView>
-    // <Notification />
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#e74d3d',
+    width: Dimensions.get('window').width,
+	  height: Dimensions.get('window').height,
+  },
 });

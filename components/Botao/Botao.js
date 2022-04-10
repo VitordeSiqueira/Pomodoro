@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, Button } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons';
+import { View } from 'moti';
 
 export function Botao(props) {
 
@@ -33,7 +34,22 @@ export function Botao(props) {
     }
 
     return (
-        <View style={styles.container}>
+        <View
+        from={{
+            rotate: '0deg',
+            opacity: 0,
+            translateY: -10
+        }}
+        animate={{
+            rotate: '360deg',
+            opacity: 1,
+        }}
+        transition={{
+            type: 'timing',
+            duration: 1000
+        }}
+        
+        style={styles.container}>
             <TouchableOpacity
                 onPress={mudarStatus}
                 style={styles.button}
@@ -42,7 +58,7 @@ export function Botao(props) {
                 <Feather
                     name={iniciado ? 'pause' : 'play'}
                     size={60}
-                    color='black'
+                    color='white'
                 />
             </TouchableOpacity>
         </View>
@@ -56,11 +72,10 @@ const styles = StyleSheet.create({
     },
     button: {
         alignItems: "center",
-        backgroundColor: "#DDDDDD",
+        backgroundColor: "#bf392b",
         height: 100,
         width: 100,
         justifyContent: 'center',
-        backgroundColor: '#65727B',
         borderRadius: 50
     },
 

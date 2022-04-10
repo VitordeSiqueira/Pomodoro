@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, Alert, Vibration } from 'react-native'
 
+
+import * as Notifications from 'expo-notifications';
+
+//Config SDK Notification
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+    }),
+  });
+  
+
 export function Tempo(props) {
     const [minuto, setMinuto] = useState(0);
     const [segundo, setSegundo] = useState(5);
@@ -24,17 +37,12 @@ export function Tempo(props) {
         }
     }, [props.minuto]);
 
+    //Função Alerta
     const createTwoButtonAlert = () =>
-
         Alert.alert(
-            "Alert Title",
-            "My Alert Msg",
+            "Tempo Esgotado",
+            "Não sei o que escrever",
             [
-                {
-                    text: "Cancel",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel"
-                },
                 { text: "OK", onPress: () => Vibration.cancel() }
             ]
         );
@@ -60,10 +68,13 @@ export function Tempo(props) {
                 }
             }, 1000);
 
-            // if(segundo == 0) {
-            //     createTwoButtonAlert()
-            //     Vibration.vibrate(2 * ONE_SECOND_IN_MS)
-            // }
+            if(segundo == 0) {
+                //Chamando a função do SDK Notification
+                schedulePushNotification();
+                //Chamando a função Alerta
+                createTwoButtonAlert()
+                // Vibration.vibrate(1 * ONE_SECOND_IN_MS)
+            }
         }
         else {
             //Caso a varivel iniciado seja false, ou seja, o timer esteja parado, vai definir os segundo e minutos de acordo com os valores que eram no momento em que foi pausado o timer
@@ -85,26 +96,49 @@ export function Tempo(props) {
             <View style={styles.bloco}>
                 <Text style={styles.caracter}>{timerSegundo}</Text>
             </View>
-
         </View>
-
     )
 }
+
+//Função SDK Notification
+async function schedulePushNotification() {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Tempo Finalizado ⏰",
+        body: 'Não sei o que escrever2',
+        data: { data: 'goes here' },
+      },
+      trigger: null,
+    });
+  }
 
 const styles = StyleSheet.create({
     bloco: {
         borderColor: '#8fb9ff',
-        borderRadius: 5,
-        borderWidth: 5,
-        paddingHorizontal: 5
+        borderRadius: 8,
+        paddingHorizontal: 5,
+        backgroundColor: '#fff',
+        marginTop: 50,
+
+        shadowColor: "#fff",
+        shadowOffset: {
+            width: 0,
+            height: 12,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+        
+        elevation: 24,
     },
     caracter: {
-        color: '#000',
+        color: '#e74d3d',
+        paddingHorizontal: 10,
+        paddingVertical: 20,
         fontSize: 80
     },
     container: {
         alignItems: 'center',
-        backgroundColor: '#b5d1ff',
+        backgroundColor: '#e74d3d',
         flexDirection: 'row',
         justifyContent: 'center',
         marginVertical: 8,
